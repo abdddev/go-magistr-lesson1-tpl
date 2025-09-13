@@ -115,16 +115,16 @@ func analyzeMetrics(m *models.Metrics) {
 	}
 
 	if m.MemTotalBytes > 0 {
-		memPct := float64(m.MemUsedBytes) / float64(m.MemTotalBytes) * 100.0
-		if memPct > 80.0 {
-			fmt.Printf("Memory usage too high: %.0f%%\n", memPct)
+		memPct := (int64(m.MemUsedBytes) * 100) / int64(m.MemTotalBytes)
+		if memPct > 80 {
+			fmt.Printf("Memory usage too high: %d%%\n", memPct)
 		}
 	}
 
 	if m.DiskTotalBytes > 0 {
-		usedPct := float64(m.DiskUsedBytes) / float64(m.DiskTotalBytes) * 100.0
-		if usedPct > 90.0 {
-			freeBytes := m.DiskTotalBytes - m.DiskUsedBytes
+		usedPct := (int64(m.DiskUsedBytes) * 100) / int64(m.DiskTotalBytes)
+		if usedPct > 90 {
+			freeBytes := int64(m.DiskTotalBytes) - int64(m.DiskUsedBytes)
 			if freeBytes < 0 {
 				freeBytes = 0
 			}
@@ -134,14 +134,14 @@ func analyzeMetrics(m *models.Metrics) {
 	}
 
 	if m.NetBandwidthBps > 0 {
-		loadPct := float64(m.NetLoadBps) / float64(m.NetBandwidthBps) * 100.0
-		if loadPct > 90.0 {
-			freeBps := m.NetBandwidthBps - m.NetLoadBps
+		loadPct := (int64(m.NetLoadBps) * 100) / int64(m.NetBandwidthBps)
+		if loadPct > 90 {
+			freeBps := int64(m.NetBandwidthBps) - int64(m.NetLoadBps)
 			if freeBps < 0 {
 				freeBps = 0
 			}
-			freeMbit := float64(freeBps) * 8.0 / 1_000_000.0
-			fmt.Printf("Network bandwidth usage high: %.0f Mbit/s available\n", freeMbit)
+			freeMbit := freeBps / 1_000_000
+			fmt.Printf("Network bandwidth usage high: %d Mbit/s available\n", freeMbit)
 		}
 	}
 }
