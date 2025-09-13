@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"github.com/abdddev/go-magistr-lesson1-tpl.git/pkg/models"
 	"io"
@@ -62,7 +63,7 @@ func handleError() (*models.Metrics, error) {
 	errorCount++
 	if errorCount >= 3 {
 		errorCount = 0
-		return nil, fmt.Errorf(errMsg)
+		return nil, errors.New(errMsg)
 	}
 	return nil, nil
 }
