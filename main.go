@@ -16,7 +16,7 @@ const (
 	statsAPIPath   = "/_stats"
 	requestTimeout = 5 * time.Second
 	tickerTime     = 3 * time.Second
-	errMsg         = "Unable to fetch server statistic"
+	errMsg         = "unable to fetch server statistic"
 )
 
 var (
